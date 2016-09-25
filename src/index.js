@@ -1,10 +1,24 @@
 // @flow
+import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './app/view';
 import './index.css';
+import App from './app/view';
+import store from './store';
 
-ReactDOM.render(
-  <App />,
-  document.getElementById('root')
-);
+function render() {
+  ReactDOM.render(
+    <App
+      dispatch={store.dispatch}
+      state={store.getState()}
+    />,
+    document.getElementById('root'),
+  );
+}
+
+store.subscribe(render);
+render();
+
+store.dispatch({
+  type: 'Load',
+});

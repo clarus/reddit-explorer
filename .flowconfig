@@ -4,6 +4,7 @@
 [include]
 
 [libs]
+./node_modules/fbjs/flow/lib
 decls/
 
 [options]
