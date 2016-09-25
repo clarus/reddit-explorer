@@ -5,8 +5,8 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import * as Ship from 'redux-ship';
 import * as Effect from './effect';
-import App from './app/view';
-import * as Controller from './app/controller';
+import Index from './index/view';
+import * as Controller from './index/controller';
 import store from './store';
 
 function handle(action: Controller.Action): void {
@@ -15,7 +15,7 @@ function handle(action: Controller.Action): void {
 
 function render() {
   ReactDOM.render(
-    <App
+    <Index
       handle={handle}
       state={store.getState()}
     />,
