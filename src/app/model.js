@@ -9,12 +9,16 @@ export const initialState: State = {
 };
 
 export type Action = {
+  type: '@@redux/INIT',
+} | {
   type: 'LoadSuccess',
   requestResult: string,
 };
 
 export function reduce(state: State, action: Action): State {
   switch (action.type) {
+    case '@@redux/INIT':
+      return state;
     case 'LoadSuccess':
       return {
         ...state,

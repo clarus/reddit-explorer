@@ -11,7 +11,7 @@ it('renders without crashing', () => {
   const div = document.createElement('div');
   ReactDOM.render(
     <App
-      dispatch={handle}
+      handle={handle}
       state={Model.initialState}
     />,
     div,
