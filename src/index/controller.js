@@ -11,12 +11,24 @@ function* load(): Ship.t<Effect.t, Model.Action, Model.State, void> {
   const request = {
     body: null,
     method: 'GET',
-    url: 'http://www.reddit.com/r/aww/hot.json',
+    url: 'http://www.reddit.com/r/aww/hot.json?raw_json=1',
   };
   const requestResult = yield* Effect.httpRequest(request);
   yield* Ship.dispatch({
     type: 'LoadSuccess',
     requestResult: requestResult.text,
+  });
+  const linksArray = JSON.parse(requestResult.text).data.children;
+  const links = linksArray.reduce((accumulator, link) => ({
+    ...accumulator,
+    [link.data.id]: link.data,
+  }), {});
+  yield* Ship.dispatch({
+    type: 'Links',
+    action: {
+      type: 'Add',
+      links,
+    },
   });
 }
 
