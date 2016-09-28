@@ -4,7 +4,7 @@ import logo from '../logo.svg';
 import './view.css';
 import * as Controller from './controller';
 import * as Model from './model';
-import Posts from './posts/view';
+import Links from './links/view';
 
 type Props = {
   handle: (action: Controller.Action) => void,
@@ -22,7 +22,7 @@ export default class Index extends PureComponent<void, Props, void> {
         <p>
           {!this.props.state.requestResult && 'Loading...'}
         </p>
-        <Posts
+        <Links
           links={this.props.state.links}
         />
       </div>

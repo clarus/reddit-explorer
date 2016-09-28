@@ -1,20 +1,13 @@
 // @flow
+import * as Link from '../type/link';
 
-export type Link = {
-  author: string,
-  permalink: string,
-  score: number,
-  title: string,
-  url: string,
-};
-
-export type State = {[id: string]: Link};
+export type State = {[id: string]: Link.t};
 
 export const initialState: State = {};
 
 export type Action = {
   type: 'Add',
-  links: {[id: string]: Link},
+  links: {[id: string]: Link.t},
 };
 
 export function reduce(state: State, action: Action): State {
