@@ -8,12 +8,8 @@ export type Action = {
 };
 
 function* load(): Ship.t<Effect.t, Model.Action, Model.State, void> {
-  const request = {
-    body: null,
-    method: 'GET',
-    url: 'http://www.reddit.com/r/aww/hot.json?raw_json=1',
-  };
-  const requestResult = yield* Effect.httpRequest(request);
+  const url = 'http://www.reddit.com/r/aww/hot.json?raw_json=1';
+  const requestResult = yield* Effect.httpRequest(url);
   yield* Ship.dispatch({
     type: 'LoadSuccess',
     requestResult: requestResult.text,
