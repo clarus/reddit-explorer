@@ -56,3 +56,5 @@ render();
 handle({
   type: 'Load',
 });
+
+import './route';
