@@ -1,5 +1,4 @@
 // @flow
-import pathToRegexp from 'path-to-regexp';
 
 export type Invalid = {
   type: 'NotFound',
@@ -20,46 +19,34 @@ export type t = {
   route: Valid,
 };
 
-const routes: {[pattern: string]: string} = {
-  '/': 'Index',
-  '/r/:subreddit': 'Subreddit',
+const notFound: t = {
+  type: 'Invalid',
+  route: {
+    type: 'NotFound',
+  },
 };
 
 export function parse(url: string): t {
-  const results = Object.keys(routes).map((pattern): any => {
-    const keys = [];
-    const regexp = pathToRegexp(pattern, keys);
-    const args = regexp.exec(url);
-    if (args) {
-      const namedArgs = keys.reduce((accumulator, key, keyIndex) => ({
-        ...accumulator,
-        [key.name]: args[keyIndex + 1],
-      }), {});
-      return {
-        type: 'Valid',
-        route: {
-          type: (routes[pattern]: any),
-          ...namedArgs,
-        },
-      };
-    }
-    return null;
-  }).filter((route) => route !== null);
-  return results.length !== 0 ? results[0] : {
-    type: 'Invalid',
-    route: {
-      type: 'NotFound',
-    },
-  };
-}
-
-export function print(route: Valid): string {
-  const pattern = Object.keys(routes).find((pattern) => routes[pattern] === route.type);
-  if (pattern) {
-    ...
+  const args = url.split('/').slice(1);
+  if (!args[0]) {
+    return {
+      type: 'Valid',
+      route: {
+        type: 'Index',
+      },
+    };
   }
-  return '';
+  if (args[0] === 'r') {
+    if (!args[1]) {
+      return notFound;
+    }
+    return {
+      type: 'Valid',
+      route: {
+        type: 'Subreddit',
+        subreddit: args[1],
+      },
+    };
+  }
+  return notFound;
 }
-
-console.log(pathToRegexp('/r/:subreddit').exec('/r/bla/'));
-console.log(parse('/r/bla'));

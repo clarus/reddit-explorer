@@ -1,10 +1,12 @@
 // @flow
 import * as Ship from 'redux-ship';
 import * as Effect from '../effect';
+import * as Route from '../route';
 import * as Model from './model';
 
 export type Action = {
   type: 'Load',
+  route: Route.t,
 };
 
 function* load(): Ship.t<Effect.t, Model.Action, Model.State, void> {

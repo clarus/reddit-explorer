@@ -2,11 +2,13 @@
 import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import createHistory from 'history/createBrowserHistory'
 import './index.css';
 import * as Ship from 'redux-ship';
 import * as Effect from './effect';
 import Index from './index/view';
 import * as Controller from './index/controller';
+import * as Route from './route';
 import store from './store';
 
 function padTwoDigits(n: number): string {
@@ -53,8 +55,16 @@ function render() {
 store.subscribe(render);
 render();
 
+const history = createHistory();
+
 handle({
   type: 'Load',
+  route: Route.parse(history.location.pathname),
 });
 
-import './route';
+history.listen((location) => {
+  handle({
+    type: 'Load',
+    route: Route.parse(location.pathname),
+  });
+});
