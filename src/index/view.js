@@ -4,14 +4,53 @@ import logo from '../logo.svg';
 import './view.css';
 import * as Controller from './controller';
 import * as Model from './model';
-import Links from './links/view';
+import * as Route from '../route';
+import Home from './home/view';
+import NotFound from './not-found/view';
+import Subreddit from './subreddit/view';
 
 type Props = {
   dispatch: (action: Controller.Action) => void,
+  route: Route.t,
   state: Model.State,
 };
 
 export default class Index extends PureComponent<void, Props, void> {
+  renderValidContent(route: Route.Valid) {
+    switch (route.type) {
+      case 'Home':
+        return <Home />;
+      case 'Subreddit':
+        return (
+          <Subreddit
+            links={this.props.state.links}
+          />
+        );
+      default:
+        return route;
+    }
+  }
+
+  renderInvalidContent(route: Route.Invalid) {
+    switch (route.type) {
+      case 'NotFound':
+        return <NotFound />;
+      default:
+        return route;
+    }
+  }
+
+  renderContent() {
+    switch (this.props.route.type) {
+      case 'Valid':
+        return this.renderValidContent(this.props.route.route);
+      case 'Invalid':
+        return this.renderInvalidContent(this.props.route.route);
+      default:
+        return this.props.route;
+    }
+  }
+
   render() {
     return (
       <div className="Index">
@@ -19,12 +58,7 @@ export default class Index extends PureComponent<void, Props, void> {
           <img src={logo} className="Index-logo" alt="logo" />
           <h2>Welcome to React</h2>
         </div>
-        <p>
-          {!this.props.state.requestResult && 'Loading...'}
-        </p>
-        <Links
-          links={this.props.state.links}
-        />
+        {this.renderContent()}
       </div>
     );
   }

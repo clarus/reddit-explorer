@@ -42,10 +42,17 @@ function dispatch(action: Controller.Action): void {
   Ship.run(Effect.run, store.dispatch, store.getState, controller(action));
 }
 
+const history = createHistory();
+
+function route(): Route.t {
+  return Route.parse(history.location.pathname);
+}
+
 function render() {
   ReactDOM.render(
     <Index
       dispatch={dispatch}
+      route={route()}
       state={store.getState()}
     />,
     document.getElementById('root'),
@@ -53,18 +60,17 @@ function render() {
 }
 
 store.subscribe(render);
-render();
-
-const history = createHistory();
-
-dispatch({
-  type: 'Load',
-  route: Route.parse(history.location.pathname),
-});
 
 history.listen((location) => {
   dispatch({
     type: 'Load',
     route: Route.parse(location.pathname),
   });
+});
+
+render();
+
+dispatch({
+  type: 'Load',
+  route: route(),
 });
