@@ -4,14 +4,14 @@ import ReactDOM from 'react-dom';
 import Index from './view';
 import * as Model from './model';
 
-function handle() {
+function dispatch() {
 }
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
   ReactDOM.render(
     <Index
-      handle={handle}
+      dispatch={dispatch}
       state={Model.initialState}
     />,
     div,

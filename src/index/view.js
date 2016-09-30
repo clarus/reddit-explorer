@@ -7,7 +7,7 @@ import * as Model from './model';
 import Links from './links/view';
 
 type Props = {
-  handle: (action: Controller.Action) => void,
+  dispatch: (action: Controller.Action) => void,
   state: Model.State,
 };
 

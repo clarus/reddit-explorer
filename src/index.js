@@ -38,14 +38,14 @@ function* controller(action: Controller.Action) {
   console.groupEnd();
 }
 
-function handle(action: Controller.Action): void {
+function dispatch(action: Controller.Action): void {
   Ship.run(Effect.run, store.dispatch, store.getState, controller(action));
 }
 
 function render() {
   ReactDOM.render(
     <Index
-      handle={handle}
+      dispatch={dispatch}
       state={store.getState()}
     />,
     document.getElementById('root'),
@@ -57,13 +57,13 @@ render();
 
 const history = createHistory();
 
-handle({
+dispatch({
   type: 'Load',
   route: Route.parse(history.location.pathname),
 });
 
 history.listen((location) => {
-  handle({
+  dispatch({
     type: 'Load',
     route: Route.parse(location.pathname),
   });
