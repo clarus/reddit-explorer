@@ -6,12 +6,12 @@
     "react-scripts": "0.5.1"
   },
   "dependencies": {
-    "babel-polyfill": "^6.13.0",
-    "history": "^4.2.0",
+    "babel-polyfill": "^6.16.0",
+    "history": "^4.4.0",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
     "redux": "^3.6.0",
-    "redux-logger": "^2.6.1",
+    "redux-logger": "^2.7.4",
     "redux-ship": "0.0.5"
   },
   "scripts": {
