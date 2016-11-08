@@ -22,14 +22,14 @@ function isoLocaleTimeString(date: Date): string {
     (date.getMilliseconds() / 1000).toFixed(3).slice(2, 5);
 }
 
-function snapshotShape<Effect, Action, State>(
-  snapshot: Ship.Snapshot<Effect, Action, State>
+function snapshotShape<Effect, Action>(
+  snapshot: Ship.Snapshot<Effect, Action>
 ): string[] {
   return snapshot.map((snapshotItem) => snapshotItem.type);
 }
 
 function* controller(action: Controller.Action) {
-  const {snapshot} = yield* Ship.snapshot(Controller.controller(action));
+  const {snapshot} = yield* Ship.snap(Controller.controller(action));
   const now = new Date();
   console.group('ship', '@', isoLocaleTimeString(now), action.type);
   console.log('action', action);
@@ -39,7 +39,7 @@ function* controller(action: Controller.Action) {
 }
 
 function dispatch(action: Controller.Action): void {
-  Ship.run(Effect.run, store.dispatch, store.getState, controller(action));
+  Ship.run(Effect.run, store, controller(action));
 }
 
 const history = createHistory();

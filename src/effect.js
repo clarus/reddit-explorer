@@ -11,7 +11,7 @@ export type t = {
   url: string,
 };
 
-export function httpRequest<Action, State>(url: string): Ship.t<t, Action, State, HttpResponse> {
+export function httpRequest<Action, State>(url: string): Ship.Ship<t, Action, State, HttpResponse> {
   return Ship.call({
     type: 'HttpRequest',
     url,

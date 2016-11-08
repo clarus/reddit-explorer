@@ -9,10 +9,10 @@ export type Action = {
   route: Route.t,
 };
 
-function* load(): Ship.t<Effect.t, Model.Action, Model.State, void> {
+function* load(): Ship.Ship<Effect.t, Model.Action, Model.State, void> {
   const url = 'http://www.reddit.com/r/aww/hot.json?raw_json=1';
   const requestResult = yield* Effect.httpRequest(url);
-  yield* Ship.dispatch({
+  yield* Ship.commit({
     type: 'LoadSuccess',
     requestResult: requestResult.text,
   });
@@ -21,7 +21,7 @@ function* load(): Ship.t<Effect.t, Model.Action, Model.State, void> {
     ...accumulator,
     [link.data.id]: link.data,
   }), {});
-  yield* Ship.dispatch({
+  yield* Ship.commit({
     type: 'Links',
     action: {
       type: 'Add',
@@ -30,7 +30,7 @@ function* load(): Ship.t<Effect.t, Model.Action, Model.State, void> {
   });
 }
 
-export function controller(action: Action): Ship.t<Effect.t, Model.Action, Model.State, void> {
+export function controller(action: Action): Ship.Ship<Effect.t, Model.Action, Model.State, void> {
   switch (action.type) {
     case 'Load':
       return load();
