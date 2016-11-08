@@ -5,19 +5,19 @@ export type State = {[id: string]: Link.t};
 
 export const initialState: State = {};
 
-export type Action = {
+export type Commit = {
   type: 'Add',
   links: {[id: string]: Link.t},
 };
 
-export function reduce(state: State, action: Action): State {
-  switch (action.type) {
+export function reduce(state: State, commit: Commit): State {
+  switch (commit.type) {
     case 'Add':
       return {
         ...state,
-        ...action.links,
+        ...commit.links,
       };
     default:
-      return action;
+      return state;
   }
 }

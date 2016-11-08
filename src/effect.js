@@ -6,17 +6,10 @@ export type HttpResponse = {
   text: string,
 };
 
-export type t = {
+export type Effect = {
   type: 'HttpRequest',
   url: string,
 };
-
-export function httpRequest<Action, State>(url: string): Ship.Ship<t, Action, State, HttpResponse> {
-  return Ship.call({
-    type: 'HttpRequest',
-    url,
-  });
-}
 
 function runHttpRequest(url: string): Promise<HttpResponse> {
   return new Promise((resolve) => {
@@ -34,11 +27,20 @@ function runHttpRequest(url: string): Promise<HttpResponse> {
   });
 }
 
-export function run(effect: t): Promise<any> {
+export function run(effect: Effect): Promise<any> {
   switch (effect.type) {
     case 'HttpRequest':
       return runHttpRequest(effect.url);
     default:
       return effect;
   }
+}
+
+export function httpRequest<Commit, State>(
+  url: string
+): Ship.Ship<Effect, Commit, State, HttpResponse> {
+  return Ship.call({
+    type: 'HttpRequest',
+    url,
+  });
 }

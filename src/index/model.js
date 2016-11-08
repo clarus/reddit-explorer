@@ -11,31 +11,27 @@ export const initialState: State = {
   requestResult: null,
 };
 
-export type Action = {
-  type: '@@redux/INIT',
-} | {
+export type Commit = {
   type: 'Links',
-  action: ModelLinks.Action,
+  commit: ModelLinks.Commit,
 } | {
   type: 'LoadSuccess',
   requestResult: string,
 };
 
-export function reduce(state: State, action: Action): State {
-  switch (action.type) {
-    case '@@redux/INIT':
-      return state;
+export function reduce(state: State, commit: Commit): State {
+  switch (commit.type) {
     case 'Links':
       return {
         ...state,
-        links: ModelLinks.reduce(state.links, action.action),
+        links: ModelLinks.reduce(state.links, commit.commit),
       };
     case 'LoadSuccess':
       return {
         ...state,
-        requestResult: action.requestResult,
+        requestResult: commit.requestResult,
       };
     default:
-      return action;
+      return state;
   }
 }

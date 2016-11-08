@@ -29,7 +29,7 @@ function snapshotShape<Effect, Action>(
 }
 
 function* controller(action: Controller.Action) {
-  const {snapshot} = yield* Ship.snap(Controller.controller(action));
+  const {snapshot} = yield* Ship.snap(Controller.control(action));
   const now = new Date();
   console.group('ship', '@', isoLocaleTimeString(now), action.type);
   console.log('action', action);

@@ -6,7 +6,7 @@ type Props = {
   link: Link.t,
 };
 
-export default class LinksLink extends PureComponent<void, Props, void> {
+export default class SubredditLink extends PureComponent<void, Props, void> {
   render() {
     return (
       <li>

@@ -9,7 +9,7 @@ export type Action = {
   route: Route.t,
 };
 
-function* load(): Ship.Ship<Effect.t, Model.Action, Model.State, void> {
+function* load(): Ship.Ship<*, Model.Commit, Model.State, void> {
   const url = 'http://www.reddit.com/r/aww/hot.json?raw_json=1';
   const requestResult = yield* Effect.httpRequest(url);
   yield* Ship.commit({
@@ -23,14 +23,14 @@ function* load(): Ship.Ship<Effect.t, Model.Action, Model.State, void> {
   }), {});
   yield* Ship.commit({
     type: 'Links',
-    action: {
+    commit: {
       type: 'Add',
       links,
     },
   });
 }
 
-export function controller(action: Action): Ship.Ship<Effect.t, Model.Action, Model.State, void> {
+export function control(action: Action): Ship.Ship<*, Model.Commit, Model.State, void> {
   switch (action.type) {
     case 'Load':
       return load();
