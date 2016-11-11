@@ -31,6 +31,20 @@ export default class Index extends PureComponent<void, Props, void> {
     });
   };
 
+  subTitle(route: Route.Valid): ?string {
+    switch (route.type) {
+      case 'Home':
+        return null;
+      case 'Link':
+        const commentAndLink = this.props.state.link.comments[route.link];
+        return commentAndLink && `r/${commentAndLink.link.subreddit}`;
+      case 'Subreddit':
+        return `r/${route.subreddit}`;
+      default:
+        return null;
+    }
+  }
+
   renderValidContent(route: Route.Valid) {
     switch (route.type) {
       case 'Home':
@@ -85,9 +99,12 @@ export default class Index extends PureComponent<void, Props, void> {
         <section className="hero is-primary">
           <div className="hero-body">
             <div className="container">
-              <h1 className="title">
+              <p className="title is-1">
                 Reddit Explorer
-              </h1>
+              </p>
+              <p className="subtitle is-3">
+                {this.props.route.type === 'Valid' && this.subTitle(this.props.route.route)}
+              </p>
             </div>
           </div>
         </section>

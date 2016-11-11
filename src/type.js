@@ -12,6 +12,7 @@ export type Link = {
   author: string,
   num_comments: number,
   score: number,
+  subreddit: string,
   thumbnail: string,
   title: string,
   url: string,

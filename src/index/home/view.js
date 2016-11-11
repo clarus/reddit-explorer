@@ -20,20 +20,17 @@ export default class Home extends PureComponent<void, Props, void> {
 
   render() {
     return (
-      <div>
-        <h1>Reddit</h1>
-        <ul>
-          {['reactjs', 'javascript', 'aww'].map(subreddit =>
-            <li key={subreddit}>
-              <a
-                href={Route.print({type: 'Subreddit', subreddit})}
-                onClick={this.handleClickLink}
-              >
-                {subreddit}
-              </a>
-            </li>
-          )}
-        </ul>
+      <div className="content">
+        {['reactjs', 'javascript', 'aww'].map(subreddit =>
+          <p className="title is-4" key={subreddit}>
+            <a
+              href={Route.print({type: 'Subreddit', subreddit})}
+              onClick={this.handleClickLink}
+            >
+              r/{subreddit}
+            </a>
+          </p>
+        )}
       </div>
     );
   }
