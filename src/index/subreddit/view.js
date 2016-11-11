@@ -1,23 +1,28 @@
 // @flow
 import React, { PureComponent } from 'react';
+import * as Type from '../../type';
 import SubredditLink from './view.link';
-import * as ModelLinks from '../../model/links';
+import * as SubredditModel from './model';
 
 type Props = {
-  links: ModelLinks.State,
+  state: SubredditModel.State,
 };
 
 export default class Subreddit extends PureComponent<void, Props, void> {
-  render() {
+  renderLinks(links: Type.Links) {
     return (
       <ul>
-        {Object.keys(this.props.links).map(linkId =>
+        {Object.keys(links).map(linkId =>
           <SubredditLink
             key={linkId}
-            link={this.props.links[linkId]}
+            link={links[linkId]}
           />
         )}
       </ul>
     );
+  }
+
+  render() {
+    return this.props.state.links && this.renderLinks(this.props.state.links);
   }
 }

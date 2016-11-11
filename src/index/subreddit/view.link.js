@@ -1,9 +1,9 @@
 // @flow
 import React, { PureComponent } from 'react';
-import * as Link from '../../type/link';
+import * as Type from '../../type';
 
 type Props = {
-  link: Link.t,
+  link: Type.Link,
 };
 
 export default class SubredditLink extends PureComponent<void, Props, void> {

@@ -23,11 +23,11 @@ export default class Index extends PureComponent<void, Props, void> {
       case 'Subreddit':
         return (
           <Subreddit
-            links={this.props.state.links}
+            state={this.props.state.subreddit}
           />
         );
       default:
-        return route;
+        return null;
     }
   }
 
@@ -36,7 +36,7 @@ export default class Index extends PureComponent<void, Props, void> {
       case 'NotFound':
         return <NotFound />;
       default:
-        return route;
+        return null;
     }
   }
 
@@ -47,7 +47,7 @@ export default class Index extends PureComponent<void, Props, void> {
       case 'Invalid':
         return this.renderInvalidContent(this.props.route.route);
       default:
-        return this.props.route;
+        return null;
     }
   }
 

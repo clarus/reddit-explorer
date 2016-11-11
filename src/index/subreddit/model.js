@@ -1,13 +1,17 @@
 // @flow
-import * as Link from '../type/link';
+import * as Type from '../../type';
 
-export type State = {[id: string]: Link.t};
+export type State = {
+  links: ?Type.Links,
+};
 
-export const initialState: State = {};
+export const initialState: State = {
+  links: null,
+};
 
 export type Commit = {
   type: 'Add',
-  links: {[id: string]: Link.t},
+  links: Type.Links,
 };
 
 export function reduce(state: State, commit: Commit): State {
@@ -15,7 +19,7 @@ export function reduce(state: State, commit: Commit): State {
     case 'Add':
       return {
         ...state,
-        ...commit.links,
+        links: commit.links,
       };
     default:
       return state;

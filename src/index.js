@@ -18,15 +18,11 @@ function dispatch(action: Controller.Action): void {
 
 const history = createHistory();
 
-function route(): Route.t {
-  return Route.parse(history.location.pathname);
-}
-
 function render() {
   ReactDOM.render(
     <Index
       dispatch={dispatch}
-      route={route()}
+      route={Route.parse(history.location.pathname)}
       state={store.getState()}
     />,
     document.getElementById('root'),
@@ -35,16 +31,17 @@ function render() {
 
 store.subscribe(render);
 
-history.listen((location) => {
-  dispatch({
-    type: 'Load',
-    route: Route.parse(location.pathname),
-  });
-});
+function load(location): void {
+  const route = Route.parse(location.pathname);
+  if (route.type === 'Valid') {
+    const loadAction = Route.loadAction(route.route);
+    if (loadAction) {
+      dispatch(loadAction);
+    }
+  }
+}
+
+history.listen(location => load(location));
 
 render();
-
-dispatch({
-  type: 'Load',
-  route: route(),
-});
+load(history.location);

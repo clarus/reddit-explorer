@@ -1,4 +1,5 @@
 // @flow
+import * as Controller from './index/controller';
 
 export type Invalid = {
   type: 'NotFound',
@@ -50,4 +51,21 @@ export function parse(url: string): t {
     });
   }
   return notFound;
+}
+
+export function loadAction(route: Valid): ?Controller.Action {
+  switch (route.type) {
+    case 'Home':
+      return null;
+    case 'Subreddit':
+      return {
+        type: 'Subreddit',
+        action: {
+          type: 'Load',
+          subreddit: route.subreddit,
+        },
+      };
+    default:
+      return null;
+  }
 }

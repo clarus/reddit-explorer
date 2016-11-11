@@ -1,35 +1,25 @@
 // @flow
-import * as ModelLinks from '../model/links';
+import * as SubredditModel from './subreddit/model';
 
 export type State = {
-  links: ModelLinks.State,
-  requestResult: ?string,
+  subreddit: SubredditModel.State,
 };
 
 export const initialState: State = {
-  links: ModelLinks.initialState,
-  requestResult: null,
+  subreddit: SubredditModel.initialState,
 };
 
 export type Commit = {
-  type: 'Links',
-  commit: ModelLinks.Commit,
-} | {
-  type: 'LoadSuccess',
-  requestResult: string,
+  type: 'Subreddit',
+  commit: SubredditModel.Commit,
 };
 
 export function reduce(state: State, commit: Commit): State {
   switch (commit.type) {
-    case 'Links':
+    case 'Subreddit':
       return {
         ...state,
-        links: ModelLinks.reduce(state.links, commit.commit),
-      };
-    case 'LoadSuccess':
-      return {
-        ...state,
-        requestResult: commit.requestResult,
+        subreddit: SubredditModel.reduce(state.subreddit, commit.commit),
       };
     default:
       return state;
