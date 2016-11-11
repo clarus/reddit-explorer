@@ -12,11 +12,15 @@ import * as Controller from './index/controller';
 import * as Route from './route';
 import store from './store';
 
-function dispatch(action: Controller.Action): void {
-  Ship.run(Effect.run, store, logControl(Controller.control)(action));
-}
-
 const history = createHistory();
+
+function dispatch(action: Controller.Action): void {
+  Ship.run(
+    effect => Effect.run(history, effect),
+    store,
+    logControl(Controller.control)(action)
+  );
+}
 
 function render() {
   ReactDOM.render(
@@ -32,6 +36,7 @@ function render() {
 store.subscribe(render);
 
 function load(location): void {
+  render();
   const route = Route.parse(location.pathname);
   if (route.type === 'Valid') {
     const loadAction = Route.loadAction(route.route);
@@ -42,6 +47,4 @@ function load(location): void {
 }
 
 history.listen(location => load(location));
-
-render();
 load(history.location);

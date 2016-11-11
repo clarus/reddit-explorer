@@ -5,6 +5,7 @@ import './view.css';
 import * as Controller from './controller';
 import * as Model from './model';
 import * as Route from '../route';
+import * as HomeController from './home/controller';
 import Home from './home/view';
 import NotFound from './not-found/view';
 import Subreddit from './subreddit/view';
@@ -16,10 +17,21 @@ type Props = {
 };
 
 export default class Index extends PureComponent<void, Props, void> {
+  handleDispatchHome = (action: HomeController.Action): void => {
+    this.props.dispatch({
+      type: 'Home',
+      action,
+    });
+  };
+
   renderValidContent(route: Route.Valid) {
     switch (route.type) {
       case 'Home':
-        return <Home />;
+        return (
+          <Home
+            dispatch={this.handleDispatchHome}
+          />
+        );
       case 'Subreddit':
         return (
           <Subreddit

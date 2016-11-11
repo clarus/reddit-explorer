@@ -53,6 +53,17 @@ export function parse(url: string): t {
   return notFound;
 }
 
+export function print(route: Valid): string {
+  switch (route.type) {
+    case 'Home':
+      return '/';
+    case 'Subreddit':
+      return `/r/${route.subreddit}`;
+    default:
+      return '';
+  }
+}
+
 export function loadAction(route: Valid): ?Controller.Action {
   switch (route.type) {
     case 'Home':
