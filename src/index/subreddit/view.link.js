@@ -1,6 +1,7 @@
 // @flow
 import React, { PureComponent } from 'react';
 import * as Type from '../../type';
+import * as Util from '../../util';
 import * as SubredditController from './controller';
 
 type Props = {
@@ -20,19 +21,39 @@ export default class SubredditLink extends PureComponent<void, Props, void> {
     }
   };
 
+  renderThumbnail(thumbnail: string) {
+    return (
+      <figure class="image is-64x64">
+        {thumbnail !== 'default' && thumbnail !== 'self' &&
+          <img alt="thumbnail" src={thumbnail} />
+        }
+      </figure>
+    );
+  }
+
   render() {
     return (
-      <li>
-        <p>
-          <a href={this.props.link.url}>{this.props.link.title}</a>
-        </p>
-        <p>
-          <a onClick={this.handleClickLink} href={`/link/${this.props.id}`}>
-            {this.props.link.num_comments} comment{this.props.link.num_comments === 1 || 's'}
-          </a>
-        </p>
-        <p>{this.props.link.score} – {this.props.link.author}</p>
-      </li>
+      <div className="card is-fullwidth">
+        <div className="card-content">
+          <div className="content">
+            <div className="columns">
+              <div className="column is-1">
+                {this.renderThumbnail(this.props.link.thumbnail)}
+              </div>
+              <div className="column">
+                <p className="title is-5">
+                  <a href={this.props.link.url}>{this.props.link.title}</a>
+                </p>
+                {this.props.link.score} {Util.pluralize('point', this.props.link.score)} by {this.props.link.author}
+                <br />
+                <a onClick={this.handleClickLink} href={`/link/${this.props.id}`}>
+                  {this.props.link.num_comments} {Util.pluralize('comment', this.props.link.num_comments)}
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     );
   }
 }

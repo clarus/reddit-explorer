@@ -91,7 +91,7 @@ export default class Index extends PureComponent<void, Props, void> {
             </div>
           </div>
         </section>
-        <section class="section">
+        <section className="section">
           <div className="container">
             {this.renderContent()}
           </div>

@@ -14,7 +14,7 @@ type Props = {
 export default class Subreddit extends PureComponent<void, Props, void> {
   renderLinks(links: Type.Links) {
     return (
-      <ul>
+      <div>
         {Object.keys(links).map(linkId =>
           <SubredditLink
             dispatch={this.props.dispatch}
@@ -23,7 +23,7 @@ export default class Subreddit extends PureComponent<void, Props, void> {
             link={links[linkId]}
           />
         )}
-      </ul>
+      </div>
     );
   }
 

@@ -1,6 +1,7 @@
 // @flow
 import React, { PureComponent } from 'react';
 import * as Type from '../../type';
+import * as Util from '../../util';
 import * as LinkModel from './model';
 
 type Props = {
@@ -13,7 +14,7 @@ export default class Link extends PureComponent<void, Props, void> {
     return (
       <div>
         <h2>{link.title}</h2>
-        <h3>{link.num_comments} comment{link.num_comments === 1 || 's'}</h3>
+        <h3>{link.num_comments} {Util.pluralize('comment', link.num_comments)}</h3>
       </div>
     );
   }
