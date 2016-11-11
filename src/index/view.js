@@ -1,6 +1,5 @@
 // @flow
 import React, { PureComponent } from 'react';
-import './view.css';
 import * as Controller from './controller';
 import * as Model from './model';
 import * as Route from '../route';
@@ -82,11 +81,35 @@ export default class Index extends PureComponent<void, Props, void> {
 
   render() {
     return (
-      <div className="Index">
-        <div className="Index-header">
-          <h2>Reddit</h2>
-        </div>
-        {this.renderContent()}
+      <div>
+        <section className="hero is-primary">
+          <div className="hero-body">
+            <div className="container">
+              <h1 className="title">
+                Reddit Explorer
+              </h1>
+            </div>
+          </div>
+        </section>
+        <section class="section">
+          <div className="container">
+            {this.renderContent()}
+          </div>
+        </section>
+        <footer className="footer">
+          <div className="container">
+            <div className="content has-text-centered">
+              <p>
+                Built by <a href="https://github.com/clarus">Guillaume Claret</a> using <a href="https://github.com/clarus/redux-ship">Redux Ship</a>.
+              </p>
+              <p>
+                <a className="icon" href="https://github.com/clarus/reddit-explorer">
+                  <i className="fa fa-github" />
+                </a>
+              </p>
+            </div>
+          </div>
+        </footer>
       </div>
     );
   }

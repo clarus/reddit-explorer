@@ -3,7 +3,6 @@ import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import createHistory from 'history/createBrowserHistory'
-import './index.css';
 import * as Ship from 'redux-ship';
 import {logControl} from 'redux-ship-logger';
 import * as Effect from './effect';
