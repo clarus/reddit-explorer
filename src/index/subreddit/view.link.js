@@ -22,13 +22,11 @@ export default class SubredditLink extends PureComponent<void, Props, void> {
   };
 
   renderThumbnail(thumbnail: string) {
-    return (
-      <figure class="image is-64x64">
-        {thumbnail !== 'default' && thumbnail !== 'self' &&
-          <img alt="thumbnail" src={thumbnail} />
-        }
-      </figure>
-    );
+    const thumbnailLink = Util.thumbnailLink(thumbnail);
+    return thumbnailLink &&
+      <figure className="image is-64x64">
+        <img alt="thumbnail" src={thumbnailLink} />
+      </figure>;
   }
 
   render() {
@@ -44,7 +42,7 @@ export default class SubredditLink extends PureComponent<void, Props, void> {
                 <p className="title is-5">
                   <a href={this.props.link.url}>{this.props.link.title}</a>
                 </p>
-                {this.props.link.score} {Util.pluralize('point', this.props.link.score)} by {this.props.link.author}
+                {this.props.link.score} {Util.pluralize('point', this.props.link.score)} by <a href={`https://www.reddit.com/user/${this.props.link.author}`}>{this.props.link.author}</a>
                 <br />
                 <a onClick={this.handleClickLink} href={`/link/${this.props.id}`}>
                   {this.props.link.num_comments} {Util.pluralize('comment', this.props.link.num_comments)}
