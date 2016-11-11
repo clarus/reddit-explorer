@@ -6,6 +6,7 @@ import * as SubredditModel from './model';
 
 type Props = {
   state: SubredditModel.State,
+  subreddit: string,
 };
 
 export default class Subreddit extends PureComponent<void, Props, void> {
@@ -23,6 +24,7 @@ export default class Subreddit extends PureComponent<void, Props, void> {
   }
 
   render() {
-    return this.props.state.links && this.renderLinks(this.props.state.links);
+    const links = this.props.state.links[this.props.subreddit];
+    return links ? this.renderLinks(links) : <p>Loading...</p>;
   }
 }

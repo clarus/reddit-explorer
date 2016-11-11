@@ -36,6 +36,7 @@ export default class Index extends PureComponent<void, Props, void> {
         return (
           <Subreddit
             state={this.props.state.subreddit}
+            subreddit={route.subreddit}
           />
         );
       default:

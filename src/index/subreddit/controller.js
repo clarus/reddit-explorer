@@ -11,17 +11,21 @@ export type Action = {
 type Control<A> = Ship.Ship<*, SubredditModel.Commit, SubredditModel.State, A>;
 
 function* load(subreddit: string): Control<void> {
-  const url = `http://www.reddit.com/r/${subreddit}/hot.json?raw_json=1`;
-  const requestResult = yield* Effect.httpRequest(url);
-  const linksArray = JSON.parse(requestResult.text).data.children;
-  const links = linksArray.reduce((accumulator, link) => ({
-    ...accumulator,
-    [link.data.id]: link.data,
-  }), {});
-  yield* Ship.commit({
-    type: 'Add',
-    links,
-  });
+  const currentLinks = yield* Ship.getState(state => state.links[subreddit]);
+  if (!currentLinks) {
+    const url = `http://www.reddit.com/r/${subreddit}/hot.json?raw_json=1`;
+    const requestResult = yield* Effect.httpRequest(url);
+    const linksArray = JSON.parse(requestResult.text).data.children;
+    const links = linksArray.reduce((accumulator, link) => ({
+      ...accumulator,
+      [link.data.id]: link.data,
+    }), {});
+    yield* Ship.commit({
+      type: 'Add',
+      links,
+      subreddit,
+    });
+  }
 }
 
 export function* control(action: Action): Control<void> {
