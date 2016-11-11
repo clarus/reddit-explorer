@@ -9,7 +9,16 @@ type Props = {
 };
 
 export default class Link extends PureComponent<void, Props, void> {
-  renderLinks(comments: Type.Comments) {
+  renderLink(link: Type.Link) {
+    return (
+      <div>
+        <h2>{link.title}</h2>
+        <h3>{link.num_comments} comment{link.num_comments === 1 || 's'}</h3>
+      </div>
+    );
+  }
+
+  renderComments(comments: Type.Comments) {
     return (
       <ul>
         {Object.keys(comments).map(commentId =>
@@ -24,6 +33,11 @@ export default class Link extends PureComponent<void, Props, void> {
 
   render() {
     const comments = this.props.state.comments[this.props.link];
-    return comments ? this.renderLinks(comments) : <p>Loading...</p>;
+    return comments ?
+      <div>
+        {this.renderLink(comments.link)}
+        {this.renderComments(comments.comments)}
+      </div> :
+      <p>Loading...</p>;
   }
 }

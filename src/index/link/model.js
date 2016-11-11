@@ -2,7 +2,12 @@
 import * as Type from '../../type';
 
 export type State = {
-  comments: {[link: string]: Type.Comments},
+  comments: {
+    [linkId: string]: {
+      comments: Type.Comments,
+      link: Type.Link,
+    },
+  },
 };
 
 export const initialState: State = {
@@ -11,8 +16,9 @@ export const initialState: State = {
 
 export type Commit = {
   type: 'Add',
-  link: string,
   comments: Type.Comments,
+  link: Type.Link,
+  linkId: string,
 };
 
 export function reduce(state: State, commit: Commit): State {
@@ -22,7 +28,10 @@ export function reduce(state: State, commit: Commit): State {
         ...state,
         comments: {
           ...state.comments,
-          [commit.link]: commit.comments,
+          [commit.linkId]: {
+            comments: commit.comments,
+            link: commit.link,
+          },
         },
       };
     default:

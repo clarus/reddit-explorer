@@ -10,14 +10,15 @@ export type Action = {
 
 type Control<A> = Ship.Ship<*, LinkModel.Commit, LinkModel.State, A>;
 
-function* load(link: string): Control<void> {
-  const currentComments = yield* Ship.getState(state => state.comments[link]);
+function* load(linkId: string): Control<void> {
+  const currentComments = yield* Ship.getState(state => state.comments[linkId]);
   if (!currentComments) {
-    const comments = yield* Api.comments(link);
+    const {comments, link} = yield* Api.comments(linkId);
     yield* Ship.commit({
       type: 'Add',
       comments,
       link,
+      linkId,
     });
   }
 }
