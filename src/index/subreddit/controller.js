@@ -1,10 +1,13 @@
 // @flow
 import * as Ship from 'redux-ship';
-import * as Effect from '../../effect';
 import * as Api from '../../api';
+import * as Effect from '../../effect';
 import * as SubredditModel from './model';
 
 export type Action = {
+  type: 'ClickLink',
+  url: string,
+} | {
   type: 'Load',
   subreddit: string,
 };
@@ -25,6 +28,9 @@ function* load(subreddit: string): Control<void> {
 
 export function* control(action: Action): Control<void> {
   switch (action.type) {
+    case 'ClickLink':
+      yield* Effect.transitionTo(action.url);
+      return;
     case 'Load':
       yield* load(action.subreddit);
       return;

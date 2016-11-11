@@ -1,10 +1,12 @@
 // @flow
 import React, { PureComponent } from 'react';
 import * as Type from '../../type';
-import SubredditLink from './view.link';
+import * as SubredditController from './controller';
 import * as SubredditModel from './model';
+import SubredditLink from './view.link';
 
 type Props = {
+  dispatch: (action: SubredditController.Action) => void,
   state: SubredditModel.State,
   subreddit: string,
 };
@@ -15,7 +17,9 @@ export default class Subreddit extends PureComponent<void, Props, void> {
       <ul>
         {Object.keys(links).map(linkId =>
           <SubredditLink
+            dispatch={this.props.dispatch}
             key={linkId}
+            id={linkId}
             link={links[linkId]}
           />
         )}

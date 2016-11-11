@@ -5,6 +5,8 @@ import * as Controller from './controller';
 import * as Model from './model';
 import * as Route from '../route';
 import * as HomeController from './home/controller';
+import * as SubredditController from './subreddit/controller';
+import Link from './link/view';
 import Home from './home/view';
 import NotFound from './not-found/view';
 import Subreddit from './subreddit/view';
@@ -23,6 +25,13 @@ export default class Index extends PureComponent<void, Props, void> {
     });
   };
 
+  handleDispatchSubreddit = (action: SubredditController.Action): void => {
+    this.props.dispatch({
+      type: 'Subreddit',
+      action,
+    });
+  };
+
   renderValidContent(route: Route.Valid) {
     switch (route.type) {
       case 'Home':
@@ -31,9 +40,17 @@ export default class Index extends PureComponent<void, Props, void> {
             dispatch={this.handleDispatchHome}
           />
         );
+      case 'Link':
+        return (
+          <Link
+            link={route.link}
+            state={this.props.state.link}
+          />
+        );
       case 'Subreddit':
         return (
           <Subreddit
+            dispatch={this.handleDispatchSubreddit}
             state={this.props.state.subreddit}
             subreddit={route.subreddit}
           />

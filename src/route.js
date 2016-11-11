@@ -8,6 +8,9 @@ export type Invalid = {
 export type Valid = {
   type: 'Home',
 } | {
+  type: 'Link',
+  link: string,
+} | {
   type: 'Subreddit',
   subreddit: string,
 };
@@ -41,22 +44,34 @@ export function parse(url: string): t {
       type: 'Home',
     });
   }
-  if (args[0] === 'r') {
-    if (!args[1]) {
+  switch (args[0]) {
+    case 'link':
+      if (!args[1]) {
+        return notFound;
+      }
+      return valid({
+        type: 'Link',
+        link: args[1],
+      });
+    case 'r':
+      if (!args[1]) {
+        return notFound;
+      }
+      return valid({
+        type: 'Subreddit',
+        subreddit: args[1],
+      });
+    default:
       return notFound;
-    }
-    return valid({
-      type: 'Subreddit',
-      subreddit: args[1],
-    });
   }
-  return notFound;
 }
 
 export function print(route: Valid): string {
   switch (route.type) {
     case 'Home':
       return '/';
+    case 'Link':
+      return `/link/${route.link}`;
     case 'Subreddit':
       return `/r/${route.subreddit}`;
     default:
@@ -68,6 +83,14 @@ export function loadAction(route: Valid): ?Controller.Action {
   switch (route.type) {
     case 'Home':
       return null;
+    case 'Link':
+      return {
+        type: 'Link',
+        action: {
+          type: 'Load',
+          link: route.link,
+        },
+      };
     case 'Subreddit':
       return {
         type: 'Subreddit',
