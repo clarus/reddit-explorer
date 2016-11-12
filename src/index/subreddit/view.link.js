@@ -17,16 +17,16 @@ export default class SubredditLink extends PureComponent<void, Props, void> {
     event.preventDefault();
     this.props.dispatch({
       type: 'ClickLink',
-      url: this.url(),
+      route: this.route(),
     });
   };
 
-  url(): string {
-    return Route.print({
+  route(): Route.Valid {
+    return {
       type: 'Link',
       link: this.props.id,
       subreddit: this.props.link.subreddit,
-    });
+    };
   }
 
   render() {
@@ -42,7 +42,7 @@ export default class SubredditLink extends PureComponent<void, Props, void> {
               </div>
               <div className="column">
                 <p className="title is-5">
-                  <a href={this.url()} onClick={this.handleClickComments}>
+                  <a href={Route.print(this.route())} onClick={this.handleClickComments}>
                     {this.props.link.title}
                   </a>
                 </p>

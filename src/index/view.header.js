@@ -2,6 +2,7 @@
 import React, { PureComponent } from 'react';
 import * as Route from '../route';
 import * as Controller from './controller';
+import IndexHeaderSubtitle from './view.header.subtitle';
 
 type Props = {
   dispatch: (action: Controller.Action) => void,
@@ -11,12 +12,14 @@ type Props = {
 export default class IndexHeader extends PureComponent<void, Props, void> {
   handleClickLink = (event: SyntheticEvent): void => {
     event.preventDefault();
-    if (event.target instanceof HTMLAnchorElement) {
-      this.props.dispatch({
-        type: 'ClickLink',
-        url: event.target.pathname,
-      });
-    }
+    this.props.dispatch({
+      type: 'ClickLink',
+      route: this.homeRoute,
+    });
+  };
+
+  homeRoute: Route.Valid = {
+    type: 'Home',
   };
 
   renderSubTitle(route: Route.Valid) {
@@ -26,9 +29,14 @@ export default class IndexHeader extends PureComponent<void, Props, void> {
       case 'Link':
       case 'Subreddit':
         return (
-          <a href={`/r/${route.subreddit}`} onClick={this.handleClickLink}>
-            {`r/${route.subreddit}`}
-          </a>
+          <IndexHeaderSubtitle
+            dispatch={this.props.dispatch}
+            route={{
+              type: 'Subreddit',
+              subreddit: route.subreddit,
+            }}
+            title={`r/${route.subreddit}`}
+          />
         );
       default:
         return null;
@@ -41,7 +49,9 @@ export default class IndexHeader extends PureComponent<void, Props, void> {
         <div className="hero-body">
           <div className="container">
             <p className="title is-1">
-              <a href="/" onClick={this.handleClickLink}>Reddit Explorer</a>
+              <a href={Route.print(this.homeRoute)} onClick={this.handleClickLink}>
+                Reddit Explorer
+              </a>
             </p>
             <p className="subtitle is-3">
               {this.props.route.type === 'Valid' && this.renderSubTitle(this.props.route.route)}

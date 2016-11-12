@@ -1,6 +1,7 @@
 // @flow
 import * as Ship from 'redux-ship';
 import * as Effect from '../effect';
+import * as Route from '../route';
 import * as Model from './model';
 import * as HomeController from './home/controller';
 import * as LinkController from './link/controller';
@@ -8,7 +9,7 @@ import * as SubredditController from './subreddit/controller';
 
 export type Action = {
   type: 'ClickLink',
-  url: string,
+  route: Route.Valid,
 } | {
   type: 'Home',
   action: HomeController.Action,
@@ -25,7 +26,7 @@ type Control<A> = Ship.Ship<*, Model.Commit, Model.State, A>;
 export function* control(action: Action): Control<void> {
   switch (action.type) {
     case 'ClickLink':
-      yield* Effect.transitionTo(action.url);
+      yield* Effect.transitionTo(action.route);
       return;
     case 'Home':
       yield* Ship.map(

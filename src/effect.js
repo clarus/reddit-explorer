@@ -1,5 +1,6 @@
 // @flow
 import * as Ship from 'redux-ship';
+import * as Route from './route';
 
 export type HttpResponse = {
   status: number,
@@ -11,7 +12,7 @@ export type Effect = {
   url: string,
 } | {
   type: 'TransitionTo',
-  url: string,
+  route: Route.Valid,
 };
 
 function runHttpRequest(url: string): Promise<HttpResponse> {
@@ -34,11 +35,13 @@ export function run(history: any, effect: Effect): any | Promise<any> {
   switch (effect.type) {
     case 'HttpRequest':
       return runHttpRequest(effect.url);
-    case 'TransitionTo':
-      if (effect.url !== history.location.pathname) {
-        history.push(effect.url);
+    case 'TransitionTo': {
+      const pathname = Route.print(effect.route);
+      if (pathname !== history.location.pathname) {
+        history.push(pathname);
       }
       return;
+    }
     default:
       return;
   }
@@ -54,10 +57,10 @@ export function httpRequest<Commit, State>(
 }
 
 export function transitionTo<Commit, State>(
-  url: string
+  route: Route.Valid
 ): Ship.Ship<Effect, Commit, State, void> {
   return Ship.call({
     type: 'TransitionTo',
-    url,
+    route,
   });
 }
