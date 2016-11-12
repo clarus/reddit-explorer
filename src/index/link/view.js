@@ -25,6 +25,7 @@ export default class Link extends PureComponent<void, Props, void> {
           <p className="title is-5">
             {link.num_comments} {Util.pluralize('comment', link.num_comments)}
           </p>
+          <p dangerouslySetInnerHTML={{__html: link.selftext_html}} />
         </div>
       </div>
     );

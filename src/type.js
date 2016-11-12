@@ -2,7 +2,7 @@
 
 export type Comment = {
   author: string,
-  body: string,
+  body_html: string,
   score: number,
 };
 
@@ -12,6 +12,7 @@ export type Link = {
   author: string,
   num_comments: number,
   score: number,
+  selftext_html: string,
   subreddit: string,
   thumbnail: string,
   title: string,

@@ -16,7 +16,7 @@ export default class LinkComment extends PureComponent<void, Props, void> {
             <p className="title is-6">
               {this.props.comment.author} – {this.props.comment.score} {Util.pluralize('point', this.props.comment.score)}
             </p>
-            <p>{this.props.comment.body}</p>
+            <p dangerouslySetInnerHTML={{__html: this.props.comment.body_html}} />
           </div>
         </div>
       </div>
