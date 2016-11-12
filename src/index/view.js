@@ -98,7 +98,10 @@ export default class Index extends PureComponent<void, Props, void> {
   render() {
     return (
       <div>
-        <IndexHeader route={this.props.route} />
+        <IndexHeader
+          dispatch={this.props.dispatch}
+          route={this.props.route}
+        />
         <section className="section">
           <div className="container">
             {this.renderContent()}
