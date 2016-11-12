@@ -23,10 +23,11 @@ export default class SubredditLink extends PureComponent<void, Props, void> {
 
   renderThumbnail(thumbnail: string) {
     const thumbnailLink = Util.thumbnailLink(thumbnail);
-    return thumbnailLink &&
+    return thumbnailLink ?
       <figure className="image is-64x64">
         <img alt="thumbnail" src={thumbnailLink} />
-      </figure>;
+      </figure> :
+      <i aria-hidden className="fa fa-commenting-o fa-5x" />;
   }
 
   render() {
