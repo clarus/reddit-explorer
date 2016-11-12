@@ -11,14 +11,12 @@ type Props = {
 };
 
 export default class SubredditLink extends PureComponent<void, Props, void> {
-  handleClickLink = (event: SyntheticEvent): void => {
+  handleClickComments = (event: SyntheticEvent): void => {
     event.preventDefault();
-    if (event.target instanceof HTMLAnchorElement) {
-      this.props.dispatch({
-        type: 'ClickLink',
-        url: event.target.pathname,
-      });
-    }
+    this.props.dispatch({
+      type: 'ClickLink',
+      url: `/link/${this.props.id}`,
+    });
   };
 
   renderThumbnail(thumbnail: string) {
@@ -27,7 +25,9 @@ export default class SubredditLink extends PureComponent<void, Props, void> {
       <figure className="image is-64x64">
         <img alt="thumbnail" src={thumbnailLink} />
       </figure> :
-      <i aria-hidden className="fa fa-commenting-o fa-5x" />;
+      <div style={{textDecoration: 'none'}}>
+        <i aria-hidden className="fa fa-commenting-o fa-5x" />
+      </div>;
   }
 
   render() {
@@ -37,17 +37,19 @@ export default class SubredditLink extends PureComponent<void, Props, void> {
           <div className="content">
             <div className="columns">
               <div className="column is-1">
-                {this.renderThumbnail(this.props.link.thumbnail)}
+                <div onClick={this.handleClickComments} style={{cursor: 'pointer'}}>
+                  {this.renderThumbnail(this.props.link.thumbnail)}
+                </div>
               </div>
               <div className="column">
                 <p className="title is-5">
-                  <a href={this.props.link.url}>{this.props.link.title}</a>
+                  <a href={`/link/${this.props.id}`} onClick={this.handleClickComments}>
+                    {this.props.link.title}
+                  </a>
                 </p>
                 {this.props.link.score} {Util.pluralize('point', this.props.link.score)} by <a href={`https://www.reddit.com/user/${this.props.link.author}`}>{this.props.link.author}</a>
                 <br />
-                <a onClick={this.handleClickLink} href={`/link/${this.props.id}`}>
-                  {this.props.link.num_comments} {Util.pluralize('comment', this.props.link.num_comments)}
-                </a>
+                {this.props.link.num_comments} {Util.pluralize('comment', this.props.link.num_comments)}
               </div>
             </div>
           </div>
