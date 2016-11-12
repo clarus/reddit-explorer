@@ -35,7 +35,10 @@ export function run(history: any, effect: Effect): any | Promise<any> {
     case 'HttpRequest':
       return runHttpRequest(effect.url);
     case 'TransitionTo':
-      return history.push(effect.url);
+      if (effect.url !== history.location.pathname) {
+        history.push(effect.url);
+      }
+      return;
     default:
       return;
   }
