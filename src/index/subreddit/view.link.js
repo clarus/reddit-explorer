@@ -3,6 +3,7 @@ import React, { PureComponent } from 'react';
 import * as Type from '../../type';
 import * as Util from '../../util';
 import * as SubredditController from './controller';
+import Thumbnail from '../../view/thumbnail';
 
 type Props = {
   dispatch: (action: SubredditController.Action) => void,
@@ -19,17 +20,6 @@ export default class SubredditLink extends PureComponent<void, Props, void> {
     });
   };
 
-  renderThumbnail(thumbnail: string) {
-    const thumbnailLink = Util.thumbnailLink(thumbnail);
-    return thumbnailLink ?
-      <figure className="image is-64x64">
-        <img alt="thumbnail" src={thumbnailLink} />
-      </figure> :
-      <div style={{textDecoration: 'none'}}>
-        <i aria-hidden className="fa fa-commenting-o fa-5x" />
-      </div>;
-  }
-
   render() {
     return (
       <div className="card is-fullwidth">
@@ -38,7 +28,7 @@ export default class SubredditLink extends PureComponent<void, Props, void> {
             <div className="columns">
               <div className="column is-1">
                 <div onClick={this.handleClickComments} style={{cursor: 'pointer'}}>
-                  {this.renderThumbnail(this.props.link.thumbnail)}
+                  <Thumbnail thumbnail={this.props.link.thumbnail} />
                 </div>
               </div>
               <div className="column">

@@ -4,6 +4,7 @@ import * as Type from '../../type';
 import * as Util from '../../util';
 import * as LinkModel from './model';
 import LinkComment from './view.comment';
+import Thumbnail from '../../view/thumbnail';
 
 type Props = {
   link: string,
@@ -11,21 +12,11 @@ type Props = {
 };
 
 export default class Link extends PureComponent<void, Props, void> {
-  renderThumbnail(thumbnail: string, url: string) {
-    const thumbnailLink = Util.thumbnailLink(thumbnail);
-    return thumbnailLink &&
-      <figure className="image is-64x64">
-        <a href={url}>
-          <img alt="thumbnail" src={thumbnailLink} />
-        </a>
-      </figure>;
-  }
-
   renderLink(link: Type.Link) {
     return (
       <div className="columns" style={{marginBottom: 40}}>
         <div className="column is-1">
-          {this.renderThumbnail(link.thumbnail, link.url)}
+          <Thumbnail thumbnail={link.thumbnail} />
         </div>
         <div className="column">
           <p className="title is-4">
