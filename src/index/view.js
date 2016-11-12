@@ -5,6 +5,8 @@ import * as Model from './model';
 import * as Route from '../route';
 import * as HomeController from './home/controller';
 import * as SubredditController from './subreddit/controller';
+import IndexFooter from './view.footer';
+import IndexHeader from './view.header';
 import Link from './link/view';
 import Home from './home/view';
 import NotFound from './not-found/view';
@@ -96,37 +98,13 @@ export default class Index extends PureComponent<void, Props, void> {
   render() {
     return (
       <div>
-        <section className="hero is-primary">
-          <div className="hero-body">
-            <div className="container">
-              <p className="title is-1">
-                Reddit Explorer
-              </p>
-              <p className="subtitle is-3">
-                {this.props.route.type === 'Valid' && this.subTitle(this.props.route.route)}
-              </p>
-            </div>
-          </div>
-        </section>
+        <IndexHeader route={this.props.route} />
         <section className="section">
           <div className="container">
             {this.renderContent()}
           </div>
         </section>
-        <footer className="footer">
-          <div className="container">
-            <div className="content has-text-centered">
-              <p>
-                Built by <a href="https://github.com/clarus">Guillaume Claret</a> using <a href="https://github.com/clarus/redux-ship">Redux Ship</a>.
-              </p>
-              <p>
-                <a className="icon" href="https://github.com/clarus/reddit-explorer">
-                  <i className="fa fa-github" />
-                </a>
-              </p>
-            </div>
-          </div>
-        </footer>
+        <IndexFooter />
       </div>
     );
   }
