@@ -21,6 +21,7 @@ export default class Home extends PureComponent<void, Props, void> {
   render() {
     return (
       <div className="content">
+        <p>This Reddit Explorer demonstrates the use of the <a href="https://github.com/clarus/redux-ship">Redux Ship</a> effect handler. Open the Javascript console to see the logs. The sources are on <a href="https://github.com/clarus/reddit-explorer">GitHub</a>.</p>
         {['reactjs', 'javascript', 'aww'].map(subreddit =>
           <p className="title is-4" key={subreddit}>
             <a
