@@ -11,7 +11,7 @@ export default class IndexFooter extends PureComponent<void, Props, void> {
         <div className="container">
           <div className="content has-text-centered">
             <p>
-              Built by <a href="https://github.com/clarus">Guillaume Claret</a> using <a href="https://github.com/clarus/redux-ship">Redux Ship</a>.
+              Built with <a href="https://github.com/clarus/redux-ship">Redux Ship</a> and <a href="http://bulma.io/">Bulma</a>.
             </p>
             <p>
               <a className="icon" href="https://github.com/clarus/reddit-explorer">
