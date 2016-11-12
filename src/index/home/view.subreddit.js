@@ -28,7 +28,7 @@ export default class HomeSubreddit extends PureComponent<void, Props, void> {
     return (
       <p className="title is-4">
         <a
-          href={Route.print(this.route())}
+          href={Route.printHref(this.route())}
           onClick={this.handleClickLink}
         >
           r/{this.props.subreddit}

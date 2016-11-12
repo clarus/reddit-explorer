@@ -1,6 +1,5 @@
 // @flow
 import React, { PureComponent } from 'react';
-import * as Route from '../../route';
 import * as HomeController from './controller';
 import HomeSubreddit from './view.subreddit';
 

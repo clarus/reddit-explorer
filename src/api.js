@@ -9,7 +9,7 @@ export function* comments<Commit, State>(
   comments: Type.Comments,
   link: Type.Link,
 }> {
-  const url = `http://www.reddit.com/comments/${linkId}.json?raw_json=1`;
+  const url = `https://www.reddit.com/comments/${linkId}.json?raw_json=1`;
   const requestResult = yield* Effect.httpRequest(url);
   const result = JSON.parse(requestResult.text);
   const link = result[0].data.children[0].data;
@@ -24,7 +24,7 @@ export function* comments<Commit, State>(
 export function* hot<Commit, State>(
   subreddit: string
 ): Ship.Ship<*, Commit, State, Type.Links> {
-  const url = `http://www.reddit.com/r/${subreddit}/hot.json?raw_json=1`;
+  const url = `https://www.reddit.com/r/${subreddit}/hot.json?raw_json=1`;
   const requestResult = yield* Effect.httpRequest(url);
   const linksArray = JSON.parse(requestResult.text).data.children;
   return linksArray.reduce((accumulator, link) => ({

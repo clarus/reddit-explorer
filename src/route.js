@@ -81,6 +81,10 @@ export function print(route: Valid): string {
   }
 }
 
+export function printHref(route: Valid): string {
+  return `#${print(route)}`;
+}
+
 export function loadAction(route: Valid): ?Controller.Action {
   switch (route.type) {
     case 'Home':

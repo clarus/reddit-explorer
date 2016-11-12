@@ -20,7 +20,7 @@ export default class IndexHeaderSubtitle extends PureComponent<void, Props, void
 
   render() {
     return (
-      <a href={Route.print(this.props.route)} onClick={this.handleClickLink}>
+      <a href={Route.printHref(this.props.route)} onClick={this.handleClickLink}>
         {this.props.title}
       </a>
     );

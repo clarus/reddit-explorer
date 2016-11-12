@@ -49,7 +49,7 @@ export default class IndexHeader extends PureComponent<void, Props, void> {
         <div className="hero-body">
           <div className="container">
             <p className="title is-1">
-              <a href={Route.print(this.homeRoute)} onClick={this.handleClickLink}>
+              <a href={Route.printHref(this.homeRoute)} onClick={this.handleClickLink}>
                 Reddit Explorer
               </a>
             </p>

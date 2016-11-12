@@ -2,7 +2,7 @@
 import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import createHistory from 'history/createBrowserHistory'
+import createHistory from 'history/createHashHistory';
 import * as Ship from 'redux-ship';
 import {logControl} from 'redux-ship-logger';
 import * as Effect from './effect';
