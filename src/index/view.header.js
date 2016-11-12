@@ -19,14 +19,17 @@ export default class IndexHeader extends PureComponent<void, Props, void> {
     }
   };
 
-  subTitle(route: Route.Valid): ?string {
+  renderSubTitle(route: Route.Valid) {
     switch (route.type) {
       case 'Home':
         return null;
       case 'Link':
-        return null;
       case 'Subreddit':
-        return `r/${route.subreddit}`;
+        return (
+          <a href={`/r/${route.subreddit}`} onClick={this.handleClickLink}>
+            {`r/${route.subreddit}`}
+          </a>
+        );
       default:
         return null;
     }
@@ -41,7 +44,7 @@ export default class IndexHeader extends PureComponent<void, Props, void> {
               <a href="/" onClick={this.handleClickLink}>Reddit Explorer</a>
             </p>
             <p className="subtitle is-3">
-              {this.props.route.type === 'Valid' && this.subTitle(this.props.route.route)}
+              {this.props.route.type === 'Valid' && this.renderSubTitle(this.props.route.route)}
             </p>
           </div>
         </div>

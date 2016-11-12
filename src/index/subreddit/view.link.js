@@ -1,5 +1,6 @@
 // @flow
 import React, { PureComponent } from 'react';
+import * as Route from '../../route';
 import * as Type from '../../type';
 import * as Util from '../../util';
 import * as SubredditController from './controller';
@@ -16,9 +17,17 @@ export default class SubredditLink extends PureComponent<void, Props, void> {
     event.preventDefault();
     this.props.dispatch({
       type: 'ClickLink',
-      url: `/link/${this.props.id}`,
+      url: this.url(),
     });
   };
+
+  url(): string {
+    return Route.print({
+      type: 'Link',
+      link: this.props.id,
+      subreddit: this.props.link.subreddit,
+    });
+  }
 
   render() {
     return (
@@ -33,7 +42,7 @@ export default class SubredditLink extends PureComponent<void, Props, void> {
               </div>
               <div className="column">
                 <p className="title is-5">
-                  <a href={`/link/${this.props.id}`} onClick={this.handleClickComments}>
+                  <a href={this.url()} onClick={this.handleClickComments}>
                     {this.props.link.title}
                   </a>
                 </p>

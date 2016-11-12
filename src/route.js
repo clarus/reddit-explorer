@@ -10,6 +10,7 @@ export type Valid = {
 } | {
   type: 'Link',
   link: string,
+  subreddit: string,
 } | {
   type: 'Subreddit',
   subreddit: string,
@@ -46,12 +47,13 @@ export function parse(url: string): t {
   }
   switch (args[0]) {
     case 'link':
-      if (!args[1]) {
+      if (!args[1] || !args[2]) {
         return notFound;
       }
       return valid({
         type: 'Link',
-        link: args[1],
+        link: args[2],
+        subreddit: args[1],
       });
     case 'r':
       if (!args[1]) {
@@ -71,7 +73,7 @@ export function print(route: Valid): string {
     case 'Home':
       return '/';
     case 'Link':
-      return `/link/${route.link}`;
+      return `/link/${route.subreddit}/${route.link}`;
     case 'Subreddit':
       return `/r/${route.subreddit}`;
     default:
