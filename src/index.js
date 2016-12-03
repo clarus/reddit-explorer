@@ -4,7 +4,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import createHistory from 'history/createHashHistory';
 import * as Ship from 'redux-ship';
-import {inspectControl} from 'redux-ship-devtools';
+import * as ShipDevTools from 'redux-ship-devtools';
 import {logControl} from 'redux-ship-logger';
 import * as Effect from './effect';
 import Index from './index/view';
@@ -15,11 +15,8 @@ import store from './store';
 const history = createHistory();
 
 function dispatch(action: Controller.Action): void {
-  Ship.run(
-    effect => Effect.run(history, effect),
-    store,
-    inspectControl(logControl(Controller.control))(action)
-  );
+  const control = ShipDevTools.inspect(logControl(Controller.control));
+  Ship.run(effect => Effect.run(history, effect), store, control(action));
 }
 
 function render() {
